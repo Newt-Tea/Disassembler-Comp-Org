@@ -85,61 +85,38 @@ if endswith(ARGS[1], ".hack")
 
         # Loop through all assembly lines in the HACK file
         for line in Lines
-            # Reset instructions
-            dest,comp,jump = "", "", ""
 
             # A Instruction
             # if - Check instruction op-code (the first char in the string)
-            if line[1] == '0'
+
                 # Get the remaining substring and convert to decimal 
                 # Conversion (just uncomment)
-                value = parse(Int, line[2:16]; base=2)
+                # value = parse(Int, line[2:16]; base=2)
 
                 # Construct the appropriate HACK instruction
                 # https://docs.julialang.org/en/v1/manual/strings/#man-concatenation
-                instruction = "@" * string(value)
-                
+
                 # Append to hackList
                 # https://docs.julialang.org/en/v1/base/collections/#Dequeues
-                push!(hackList, instruction)
-            
+
             # C Instruction
             # elseif - Check instruction op-code (the first char in the string)
-            elseif line[1] == '1'
+            
                 # Create strings from the appropriate substrings
                 # cBit, dBit, jBit
                 # https://docs.julialang.org/en/v1/manual/strings/#String-Basics
-                cBit = line[4:10]
-                dBit = line[11:13]
-                jBit = line[14:16]
+
                 # Return HACK destination string from destTable using dBit
                 # https://docs.julialang.org/en/v1/base/collections/#Dictionaries
-                for key in keys(destTable)
-                    if key == dBit
-                        dest = destTable[key]
-                    end
-                end
+
                 # Return HACK computation string from compTable using cBit
-                for key in keys(compTable)
-                    if key == cBit
-                        comp = compTable[key]
-                    end
-                end 
 
                 # Return HACK jump string from jumpTable using jBit
-                for key in keys(jumpTable)
-                    if key == jBit
-                        jump = jumpTable[key]
-                    end
-                end
-                
+
                 # Construct the appropriate HACK instruction
-                instruction = dest * comp * jump
 
                 # Append to hackList
-                push!(hackList, instruction)
             # end
-            end
         end
 
         # Write to file
