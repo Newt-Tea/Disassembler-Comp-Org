@@ -84,39 +84,46 @@ if ARGV[0].end_with? ".hack"
 
         # Loop through all assembly lines in the HACK file
         for line in Lines do
+            # Reset instruction
+            dest, comp, jump = "", "", ""
 
             # A Instruction
             # if - Check instruction op-code (the first char in the string)
-
+            if line[0] == "0"
                 # Get the remaining substring and convert to decimal 
                 # Conversion (just uncomment)
-                # value = line[1, 15].to_i(2)
+                value = line[1, 15].to_i(2)
 
                 # Construct the appropriate HACK instruction
                 # https://www.delftstack.com/howto/ruby/ruby-string-concatenate/
-
+                instruction = "@" + value.to_s
                 # Append to hackList
                 # https://www.geeksforgeeks.org/add-array-elements-in-ruby/
-
+                hackList << instruction + "\n"
 
             # C Instruction
 
             # elsif - Check instruction op-code (the first char in the string)
-
+            elsif line[0] == "1"
                 # Create strings from the appropriate substrings
                 # cBit, dBit, jBit
                 # https://www.delftstack.com/howto/ruby/substring-in-ruby/
-
+                cBit = line[3..9]
+                dBit = line[10..12]
+                jBit = line[13..15]
                 # Return HACK destination string from destTable using dBit
                 # https://www.rubyguides.com/2020/05/ruby-hash-methods/
-
+                dest = destTable[dBit]
                 # Return HACK computation string from compTable using cBit
+                comp = compTable[cBit] 
 
                 # Return HACK jump string from jumpTable using jBit
-
+                jump = jumpTable[jBit]
                 # Construct the appropriate HACK instruction
-
+                instruction = dest + comp + jump + "\n"
                 # Append to hackList
+                hackList << instruction
+            end
             # end
         end
 
