@@ -86,37 +86,57 @@ if arg[1]:find(".hack") then
 
     -- Loop through all assembly lines in the HACK file
     for key, value in pairs(Lines) do
+        -- Reset variables
+        dest = ""
+        comp = ""
+        jmp = ""
 
         -- A Instruction
         -- if - Check instruction op-code (the first char in the string)
-
+        if string.sub(value, 1, 1) == "0" then
             -- Get the remaining substring and convert to decimal
             -- Conversion (just uncomment)
-            --      value = tonumber(value:sub(2, 16), 2)
+            value = tonumber(value:sub(2, 16), 2)
 
             -- Construct the appropriate HACK instruction
             -- https://www.lua.org/pil/3.4.html
-
+            instruction = ("@" .. value .. "\n")
             -- Append to hackList
             -- https://www.lua.org/pil/19.2.html
-
+            table.insert(hackList, instruction)
         -- C Instruction
         -- elseif - Check instruction op-code (the first char in the string)
-            
+        elseif string.sub(value, 1,1) == '1' then
             -- Create strings from the appropriate substrings
             -- cBit, dBit, jBit
             -- https://www.tutorialspoint.com/string-sub-function-in-lua
-
+            cBit = string.sub(value, 4, 10)
+            dBit = string.sub(value, 11, 13)
+            jBit = string.sub(value, 14, 16)
             -- Return HACK destination string from destTable using dBit
             -- https://www.tutorialspoint.com/lua/lua_tables.htm
-
+            for k, v in pairs(destTable) do
+                if dBit == k then
+                    dest = v
+                end
+            end
             -- Return HACK computation string from compTable using cBit
-
+            for k, v in pairs(compTable) do
+                if cBit == k then
+                    comp = v
+                end
+            end
             -- Return HACK jump string from jumpTable using jBit
-
+            for k, v in pairs(jumpTable) do
+                if jBit == k then
+                    jmp = v
+                end
+            end
             -- Construct the appropriate HACK instruction
-
+            instruction = ( dest .. comp .. jmp .. "\n")
             -- Append to hackList
+            table.insert(hackList, instruction)
+        end
     end
 
     -- Write to file
