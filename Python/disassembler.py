@@ -90,41 +90,49 @@ if ".hack" in sys.argv[1]:
             '111' : ';JMP'
         }
 
-        # Loop through all assembly lines in the HACK file
+
+     # Loop through all assembly lines in the HACK file
         for line in Lines:
+            line = line.strip()
 
             # A Instruction
             # if - Check instruction op-code (the first char in the string)
-
+            if line[0] == '0':
                 # Get the remaining substring and convert to decimal 
                 # Conversion (just uncomment)
-                #       value = int(line[1:16], 2)
+                value = int(line[1:16], 2)
 
                 # Construct the appropriate HACK instruction
-                # https://www.geeksforgeeks.org/python-string-concatenation/
+                instruction = '@' + str(value)
 
                 # Append to hackList
-                # https://www.geeksforgeeks.org/python-list-append-method/
+                hackList.append(instruction + '\n')
 
             # C Instruction
             # elif - Check instruction op-code (the first char in the string)
-            
+            elif line[0] == '1':
                 # Create strings from the appropriate substrings
                 # cBit, dBit, jBit
-                # https://www.geeksforgeeks.org/string-slicing-in-python/
+                cBit = line[3:10]
+                dBit = line[10:13]
+                jBit = line[13:16]
 
                 # Return HACK destination string from destTable using dBit
-                # https://www.geeksforgeeks.org/python-dictionary/?ref=lbp
+                dest = destTable.get(dBit, '')
 
                 # Return HACK computation string from compTable using cBit
+                comp = compTable.get(cBit, '')
 
                 # Return HACK jump string from jumpTable using jBit
+                jump = jumpTable.get(jBit, '')
 
                 # Construct the appropriate HACK instruction
+                instruction = dest + comp + jump
 
                 # Append to hackList
+                hackList.append(instruction + '\n')
 
         # Write to file
-        file = open(sys.argv[1].replace('.hack', '.asm'), 'w')
-        file.writelines(hackList)
-        file.close()
+        output_file = sys.argv[1].replace('.hack', '.asm')
+        with open(output_file, 'w') as f:
+            f.writelines(hackList)
