@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <string>
 
 using std::string;
 
@@ -38,6 +39,7 @@ int main(int argc, char *argv[])
     string fileName = argv[1];
     std::fstream file;
     std::vector<string> Lines;
+    std::vector<string> hackList;
 
     // Check if appropriate file extension
     if (fileName.find(".hack") != std::string::npos)
@@ -117,6 +119,36 @@ int main(int argc, char *argv[])
             for (int i = 0; i < Lines.size(); i++)
             {
                 string line = Lines[i];
+
+                if (line[0] == '0') {
+                    // A-instruction
+                    string value = line.substr(1, 15);
+                    int decimalValue = std::stoi(value, nullptr, 2);
+                    hackList.push_back("@" + std::to_string(decimalValue) + "\n");
+                }
+                else if (line[0] == '1') {
+                    // C-instruction
+                    string compBits = line.substr(3, 7);
+                    string destBits = line.substr(10, 3);
+                    string jumpBits = line.substr(13, 3);
+            
+                    string dest = destTable[destBits];
+                    string comp = compTable[compBits];
+                    string jump = jumpTable[jumpBits];
+            
+                    string instruction = "";
+            
+                    if (!dest.empty()) {
+                        instruction += dest;
+                    }
+                    instruction += comp;
+                    if (!jump.empty()) {
+                        instruction += jump;
+                    }
+            
+                    hackList.push_back(instruction + "\n");
+                }
+            }
 
                 // A Instruction
                 // if - Check instruction op-code (the first char in the string)
