@@ -133,6 +133,6 @@ if ".hack" in sys.argv[1]:
                 hackList.append(instruction + '\n')
 
         # Write to file
-        output_file = sys.argv[1].replace('.hack', '.asm')
-        with open(output_file, 'w') as f:
-            f.writelines(hackList)
+        file = open(sys.argv[1].replace('.hack', '.asm'), 'w')
+        file.writelines(hackList)
+        file.close()
