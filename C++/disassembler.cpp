@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
                 if (line[0] == '0') {
                     // A-instruction
                     string value = line.substr(1, 15);
+                    std::cout << "| value =" << value;
                     int decimalValue = std::stoi(value, nullptr, 2);
                     hackList.push_back("@" + std::to_string(decimalValue) + "\n");
                 }
@@ -133,8 +134,12 @@ int main(int argc, char *argv[])
                     string jumpBits = line.substr(13, 3);
             
                     string dest = destTable[destBits];
+                    std::cout << "| Dest = " << dest;
+                    
                     string comp = compTable[compBits];
+                    std::cout << "| Comp = " << comp;
                     string jump = jumpTable[jumpBits];
+                    std::cout << "| Jump = " << jump;
             
                     string instruction = "";
             
@@ -180,10 +185,10 @@ int main(int argc, char *argv[])
                     // Construct the appropriate HACK instruction
 
                     // Append to hackList
-            }
+        }
 
             // Write to file
-            file.open(fileName.replace(fileName.find(".hack"), 5, ".asm"), std::ios::out);
+        file.open(fileName.replace(fileName.find(".hack"), 5, ".asm"), std::ios::out);
 
             if(file.is_open())
             {
@@ -193,6 +198,5 @@ int main(int argc, char *argv[])
                 }
                 file.close();
             }
-        }
     }
 }
