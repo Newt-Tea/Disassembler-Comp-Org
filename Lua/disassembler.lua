@@ -118,18 +118,21 @@ if arg[1]:find(".hack") then
             for k, v in pairs(destTable) do
                 if dBit == k then
                     dest = v
+                    break
                 end
             end
             -- Return HACK computation string from compTable using cBit
             for k, v in pairs(compTable) do
                 if cBit == k then
                     comp = v
+                    break
                 end
             end
             -- Return HACK jump string from jumpTable using jBit
             for k, v in pairs(jumpTable) do
                 if jBit == k then
                     jmp = v
+                    break
                 end
             end
             -- Construct the appropriate HACK instruction
