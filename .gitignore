@@ -1,3 +1,5 @@
 nand2tetris/tools/bin/CPU Emulator.dat
 *.asm
 .vscode/settings.json
+zipped-turnin
+*.exe
