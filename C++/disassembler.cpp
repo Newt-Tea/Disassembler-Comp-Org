@@ -56,9 +56,6 @@ int main(int argc, char *argv[])
             }
             file.close();
 
-            // Vector to be used for storing HACK instructions
-            std::vector<string> hackList;
-
             // Computation Map
             std::map<string, string> compTable = {
                 {"0101010", "0"},
@@ -117,8 +114,10 @@ int main(int argc, char *argv[])
 
             // Loop through all assembly lines in the HACK file
             for (int i = 0; i < Lines.size(); i++)
+            
             {
                 string line = Lines[i];
+
 
                 if (line[0] == '0') {
                     // A-instruction
@@ -131,13 +130,13 @@ int main(int argc, char *argv[])
                     string compBits = line.substr(3, 7);
                     string destBits = line.substr(10, 3);
                     string jumpBits = line.substr(13, 3);
-            
+
                     string dest = destTable[destBits];
                     string comp = compTable[compBits];
                     string jump = jumpTable[jumpBits];
-            
+
                     string instruction = "";
-            
+
                     if (!dest.empty()) {
                         instruction += dest;
                     }
@@ -145,10 +144,11 @@ int main(int argc, char *argv[])
                     if (!jump.empty()) {
                         instruction += jump;
                     }
-            
+
                     hackList.push_back(instruction + "\n");
                 }
             }
+
 
                 // A Instruction
                 // if - Check instruction op-code (the first char in the string)
@@ -195,4 +195,3 @@ int main(int argc, char *argv[])
             }
         }
     }
-}
